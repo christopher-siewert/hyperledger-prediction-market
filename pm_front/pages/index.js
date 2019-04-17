@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Header from '../components/layout'
 import fetch from 'isomorphic-unfetch'
 import css from "../style.css"
+const address = require("./ip-config").address
 
 function costCalc(q1, q2) {
   const b = 100
@@ -48,7 +49,7 @@ class BuyForm extends Component {
       amount: this.state.amount
     }
     let headerParams = {"Content-Type": "application/json"}
-    await fetch('http://35.197.118.159:3000/api/BuyShares', {
+    await fetch(address + '/api/BuyShares', {
                 method: 'POST',
                 headers: headerParams,
                 body: JSON.stringify(bodyParams)
@@ -119,7 +120,7 @@ class SellForm extends Component {
       amount: this.state.amount
     }
     let headerParams = {"Content-Type": "application/json"}
-    await fetch('http://35.197.118.159:3000/api/SellShares', {
+    await fetch(address + '/api/SellShares', {
                 method: 'POST',
                 headers: headerParams,
                 body: JSON.stringify(bodyParams)
@@ -215,7 +216,7 @@ class App extends Component {
       };
     }
   componentDidMount() {
-    fetch("http://35.197.118.159:3000/api/Market")
+    fetch(address + ":3000/api/Market")
       .then(res => res.json())
       .then(
         (result) => {
@@ -230,7 +231,7 @@ class App extends Component {
             })
         }
       )
-    fetch("http://35.197.118.159:3000/api/Trader/1")
+    fetch(address + "/api/Trader/1")
       .then(res => res.json())
       .then(
         (result) => {
@@ -255,7 +256,7 @@ class App extends Component {
   }
 
   changeMarkets = () => {
-    fetch("http://35.197.118.159:3000/api/Market")
+    fetch(address + "/api/Market")
       .then(res => res.json())
       .then(
         (result) => {
@@ -272,7 +273,7 @@ class App extends Component {
   }
 
   changeTrader = () => {
-    fetch("http://35.197.118.159:3000/api/Trader/1")
+    fetch(address + "/api/Trader/1")
       .then(res => res.json())
       .then(
         (result) => {
