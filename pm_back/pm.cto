@@ -1,5 +1,17 @@
+/**
+ * This is the composer modeling file.
+ * It specifies the relationships between the assets, market participants, and transactions
+ */
+
 namespace org.example.basic
 
+/**
+ * This is a trader of yes and no shares in a market
+ * This would be an employee in your company
+ * balance is their play money Balance
+ * shares is an array of share objects
+ * That's how trader's balances of yes and no tokens in each market are tracked
+ */
 participant Trader identified by traderId {
   o String traderId
   o String firstName
@@ -8,6 +20,10 @@ participant Trader identified by traderId {
   o Shares[] shares
 }
 
+/**
+ * This is a specific question you want answered
+ * yes and no shares are sum totals of tokens in circulation
+ */
 asset Market identified by marketId {
   o String marketId
   o String question
@@ -17,17 +33,28 @@ asset Market identified by marketId {
   o ShareType answer
 }
 
+/**
+ * This is an enum of the possible token types
+ */
 enum ShareType {
   o YES
   o NO
 }
 
+/**
+ * Concepts are like abstract classes in OOP
+ * They are combined in other assets/transactions
+ * Each trader has an array of these objects to track shares in each market
+ */
 concept Shares {
   --> Market market
   o Long yesShares
   o Long noShares
 }
 
+/**
+ * The transaction to buy shares
+ */
 transaction BuyShares {
   --> Trader trader
   --> Market market
@@ -35,6 +62,9 @@ transaction BuyShares {
   o Long amount
 }
 
+/**
+ * The transaction to sell shares
+ */
 transaction SellShares {
   --> Trader trader
   --> Market market
@@ -42,18 +72,20 @@ transaction SellShares {
   o Long amount
 }
 
+/**
+ * The transaction to claim a traders profits,
+ * after a market has been resolved (answered)
+ */
 transaction ClaimProfits {
   --> Trader trader
   --> Market market
 }
 
+/**
+ * The transaction to resolve a market,
+ * and provide it with an answer
+ */
 transaction ResolveMarket {
   --> Market market
   o ShareType answer
 }
-
-
-
-
-
-
