@@ -8,9 +8,9 @@ The idea is that a business can set up an internal prediction market, for the em
 
 ##### Prediction Market Background Info
 
- - [What's a prediction market](#whats-a-prediction-market)
- - [Why does the market price tell you the probability](#why-does-the-market-price-tell-you-the-probability)
- - [Why is this useful for business](#why-is-this-useful-for-business)
+ - [What's a prediction market?](#whats-a-prediction-market)
+ - [Why does the market price tell you the probability?](#why-does-the-market-price-tell-you-the-probability)
+ - [Why is this useful for business?](#why-is-this-useful-for-business)
 
 ##### Installation and dev setup
  - [Implementation Overview](#implementation-overview)
@@ -27,7 +27,7 @@ For example there might be a token that says, "This token is worth $1 if it rain
 
 When people buy and sell the tokens, the market price becomes an estimate of the "true" probability of the event.
 
-### Why does the market price tell you the probability
+### Why does the market price tell you the probability?
 
 If the market price of a token differs from the probability of an event happening then there is free money on the table that people will eat up.
 
@@ -48,7 +48,7 @@ You can always make expected profit up until the point that the market price is 
 
 
 
-### Why is this useful for business
+### Why is this useful for business?
 
 When people buy and sell the tokens, the market price becomes an estimate of the "true" probability of the event. 
 
