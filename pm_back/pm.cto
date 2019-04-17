@@ -1,0 +1,59 @@
+namespace org.example.basic
+
+participant Trader identified by traderId {
+  o String traderId
+  o String firstName
+  o String lastName
+  o Double balance
+  o Shares[] shares
+}
+
+asset Market identified by marketId {
+  o String marketId
+  o String question
+  o Long yesShares
+  o Long noShares
+  o Boolean isResolved
+  o ShareType answer
+}
+
+enum ShareType {
+  o YES
+  o NO
+}
+
+concept Shares {
+  --> Market market
+  o Long yesShares
+  o Long noShares
+}
+
+transaction BuyShares {
+  --> Trader trader
+  --> Market market
+  o ShareType type
+  o Long amount
+}
+
+transaction SellShares {
+  --> Trader trader
+  --> Market market
+  o ShareType type
+  o Long amount
+}
+
+transaction ClaimProfits {
+  --> Trader trader
+  --> Market market
+}
+
+transaction ResolveMarket {
+  --> Market market
+  o ShareType answer
+}
+
+
+
+
+
+
