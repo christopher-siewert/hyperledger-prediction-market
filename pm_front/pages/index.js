@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Header from '../components/layout'
 import fetch from 'isomorphic-unfetch'
 import css from "../style.css"
-const address = require("./ip-config").address
+const address = require("../ip-config").address
 
 function costCalc(q1, q2) {
   const b = 100

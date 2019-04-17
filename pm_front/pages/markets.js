@@ -3,6 +3,7 @@ import Link from 'next/link'
 import fetch from 'isomorphic-unfetch'
 import Header from '../components/layout'
 import css from "../style.css"
+const address = require("../ip-config").address
 
 const delay = ms => new Promise(res => setTimeout(res, ms))
 
@@ -26,7 +27,7 @@ class Resolve extends Component {
       "answer": this.answer.current.value
     }
     let headerParams = {"Content-Type": "application/json"}
-    await fetch('http://35.197.118.159:3000/api/ResolveMarket', {
+    await fetch(address + '/api/ResolveMarket', {
                 method: 'POST',
                 headers: headerParams,
                 body: JSON.stringify(bodyParams)
@@ -39,7 +40,7 @@ class Resolve extends Component {
       "market": "resource:org.example.basic.Market#" + this.props.data.marketId
     }
     await delay(2000)
-    await fetch('http://35.197.118.159:3000/api/ClaimProfits', {
+    await fetch(address + '/api/ClaimProfits', {
                 method: 'POST',
                 headers: headerParams,
                 body: JSON.stringify(bodyParams)
@@ -83,7 +84,7 @@ class NewMarket extends Component {
       "answer": "YES"
     }
     let headerParams = {"Content-Type": "application/json"}
-    await fetch('http://35.197.118.159:3000/api/Market', {
+    await fetch(address + '/api/Market', {
                 method: 'POST',
                 headers: headerParams,
                 body: JSON.stringify(bodyParams)
@@ -144,7 +145,7 @@ class App extends Component {
   }
 
   async updateMarkets() {
-    const res = await fetch('http://35.197.118.159:3000/api/Market')
+    const res = await fetch(address + '/api/Market')
     const json = await res.json()
     this.setState({
       isLoaded:true,
