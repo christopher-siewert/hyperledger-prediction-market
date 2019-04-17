@@ -5,26 +5,32 @@ import Header from '../components/layout'
 import css from "../style.css"
 const address = require("../ip-config").address
 
+// Promise to intoduce delay
 const delay = ms => new Promise(res => setTimeout(res, ms))
 
+// Calculates price according to LMSR
 function calcPrice (q1, q2) {
   const b = 100
   return Math.exp(q1/b) / (Math.exp(q1/b) + Math.exp(q2/b))
 }
 
+// This is the class for the form to resolve a market
+// Uncontrolled component, uses react ref
 class Resolve extends Component {
   constructor(props) {
     super(props);
     this.answer = React.createRef();
   }
 
+  // On form submit
   handleSubmit = async (e) => {
     e.preventDefault()
 
+    // Make api call to resolve a market
     let bodyParams = {
       "$class": "org.example.basic.ResolveMarket",
       "market": "resource:org.example.basic.Market#" + this.props.data.marketId,
-      "answer": this.answer.current.value
+      "answer": this.answer.current.value // This is ref to the select input
     }
     let headerParams = {"Content-Type": "application/json"}
     await fetch(address + '/api/ResolveMarket', {
@@ -34,12 +40,15 @@ class Resolve extends Component {
             }).then((res) => res.json())
             .then((data) =>  console.log(data))
             .catch((err)=>console.log(err))
+    // Make another api call to claim the profits for the trader
     bodyParams = {
       "$class": "org.example.basic.ClaimProfits",
       "trader": "resource:org.example.basic.Trader#1",
       "market": "resource:org.example.basic.Market#" + this.props.data.marketId
     }
+    // delay to make sure market has resolved
     await delay(2000)
+    // Then call ClaimProfits
     await fetch(address + '/api/ClaimProfits', {
                 method: 'POST',
                 headers: headerParams,
@@ -53,6 +62,7 @@ class Resolve extends Component {
     return (
       <div>
       <form onSubmit={this.handleSubmit}>
+      {/* select is uncontrolled component */}
         <select ref={this.answer}>
           <option value="YES">YES</option>
           <option value="NO">NO</option>
@@ -64,6 +74,8 @@ class Resolve extends Component {
   }
 }
 
+// React class to create a new market
+// Form is uncontrolled component using refs
 class NewMarket extends Component {
   constructor(props) {
     super(props);
@@ -74,10 +86,11 @@ class NewMarket extends Component {
   handleSubmit = async (e) => {
     e.preventDefault()
 
+    // Call market api to create new market
     let bodyParams = {
       "$class": "org.example.basic.Market",
-      "marketId": this.ID.current.value,
-      "question": this.question.current.value,
+      "marketId": this.ID.current.value, // ref value to input box
+      "question": this.question.current.value, // ref value to input box
       "yesShares": 0,
       "noShares": 0,
       "isResolved": false,
@@ -91,6 +104,7 @@ class NewMarket extends Component {
             }).then((res) => res.json())
             .then((data) =>  console.log(data))
             .catch((err)=>console.log(err))
+    // Set value of input boxes to null so that user sees it went through
     this.question.current.value = ""
     this.ID.current.value = ""
   }
@@ -101,6 +115,7 @@ class NewMarket extends Component {
       <div> Create a new market</div> <br />
       <form onSubmit={this.handleSubmit}>
         <label for="ID">ID</label>&nbsp;&nbsp;&nbsp;
+        {/* Uncontrolled components with refs */}
         <input id="ID" type="text" ref={this.ID}
         className="textInput" style={{ width: 100}}>
         </input>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -115,8 +130,10 @@ class NewMarket extends Component {
   }
 }
 
+// A row in a large table of markets
 class Market extends Component {
   render() {
+    // calculate current probability using LMSR
     let prob = calcPrice(this.props.data.yesShares, this.props.data.noShares)
     prob = Math.round(prob*100*100)/100
     return (
@@ -128,14 +145,15 @@ class Market extends Component {
         <td>{prob}%</td>
         <td>{this.props.data.isResolved.toString()}</td>
         <td>{this.props.data.answer}</td>
+        {/* Adds in react resolve form */}
         <td><Resolve data={this.props.data} /></td>
       </tr>
     )
   }
 }
 
+// Main react app
 class App extends Component {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -154,6 +172,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    // sets timer to get new market data every second
     this.marketTimer = setInterval(
       () => this.updateMarkets(),
       1000
@@ -167,6 +186,7 @@ class App extends Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+      // Loop through all markets and make a market component for each
       let list = this.state.markets.map(entry => {
         return (
           <Market data={entry}/>
