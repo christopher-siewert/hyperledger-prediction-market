@@ -42,7 +42,7 @@ Thus 20% of the time (no rain) I lose $0.40 and 80% of the time (rain) I gain $0
 
 Thus I can expect to earn on average $0.40 for each token I buy.
 
-Notice that this amount I earn is exactly the same as the true probability minus the market price (0.80 - $0.40). 
+Notice that this amount I earn is exactly the same as the true probability minus the market price (0.80 - $0.40).
 
 You can always make expected profit up until the point that the market price is equal to the probability.
 
@@ -50,7 +50,7 @@ You can always make expected profit up until the point that the market price is 
 
 ### Why is this useful for business?
 
-When people buy and sell the tokens, the market price becomes an estimate of the "true" probability of the event. 
+When people buy and sell the tokens, the market price becomes an estimate of the "true" probability of the event.
 
 Thus, you get people to bet on events that are important to your business. For example: "This token is worth $1 if development for the new Apple iPhone is completed on time."
 
@@ -84,7 +84,7 @@ This project has 2 parts. (1) It contains the code neccessary to create a hyperl
 
 3. Now we will deploy our blockchain logic.
 
-We will be following [these steps](https://hyperledger.github.io/composer/latest/tutorials/developer-tutorial) 
+We will be following [these steps](https://hyperledger.github.io/composer/latest/tutorials/developer-tutorial)
 with some changes.
 
 All the back-end files are in `/pm_back/`
@@ -106,13 +106,12 @@ Next, we will get the front end running. This can be on any dev environment that
 
 Browse to pm_front and run npm install. Then npm run dev to run a dev server. It should be on localhost:4000.
 
-Note: the front end react app assumes the rest api is exposed on localhost:3000. If you set up the rest-api locally this should be correct. If you set it up on a google compute, you have to edit the IP address. This is in the ip_config.js file.
+Note: the front end react app assumes the rest api is exposed on localhost:3000. If you set up the rest-api locally this should be correct. If you set it up on a google compute engine, you have to edit the IP address. This is in the ip_config.js file.
 
+The front end is just a demo to show the rest API, and is missing a lot of features, and has a lot of hacky things hardcoded into it.
 
+There are two pages, a trading page and a markets page. The trading page is meant to be used by regular employees to buy and sell tokens for all the different event markets. The markets page is to be used by management, to propose new questions and answer the existing ones.
 
+In a full fledged solution, you would have authentication and show information for each user. This version just assumes there is a trader with ID 1. Thus, when you first start it with a new implementation of hyperledger, the trading page won't work, because there is no trader with ID 1. You have to create a trader with ID 1, using the rest api explorer. Then the trading page will allow you to buy and sell tokens as trader ID 1.
 
-
-
-
-
-
+There will also be no markets. You can create one on the markets page. 
