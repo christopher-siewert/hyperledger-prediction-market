@@ -1,3 +1,6 @@
+/* Style for index.js and market.js */
+
+/* border-box sizing for everything */
 * {
   box-sizing: border-box;
 }
@@ -6,7 +9,7 @@ body {
   background: linear-gradient(142deg, #8f7be1, #9fa2ff);
 }
 
-/* Add a black background color to the top navigation */
+/* topnav is the header on both pages */
 .topnav {
   margin:auto;
   width: 100%;
@@ -14,7 +17,7 @@ body {
   overflow: auto;
 }
 
-/* Style the links inside the navigation bar */
+/* Links inside the top header */
 .topnav a {
   float: left;
   color: #f2f2f2;
@@ -38,14 +41,15 @@ body {
   color: white;
 }
 
+/* used on main div to center all website contents */
 .center {
   margin: auto;
   width: 90%;
   padding: 10px;
 }
 
+/* Add shadows to create the card effect */
 .card {
-  /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   padding: 10px 16px;
@@ -53,11 +57,12 @@ body {
   margin-bottom: 30px;
 }
 
-/* On mouse-over, add a deeper shadow */
+/* Change shadow on mouse-over */
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
+/* Used row and colum classes to get 2 column style */
 .column {
   float: left;
   width: 50%;
@@ -68,6 +73,7 @@ body {
   clear: both;
 }
 
+/* Class for some text input boxes */
 .textInput {
   padding: 6px 6px;
   margin: 8px 0;
@@ -81,6 +87,7 @@ body {
   border: 3px solid #555;
 }
 
+/* Style submit buttons */
 input[type=submit] {
   background-color: #333;
   border: none;
@@ -96,21 +103,26 @@ input[type=submit]:hover {
   color: black;
 }
 
+/* #markets is a table to list all current markets */
+
 #markets {
   border-collapse: collapse;
   width: 100%;
 }
 
+/* Data elements */
 #markets td {
   padding: 8px;
   font-size: 10pt;
 }
 
+/* Zebra striped rows */
 #markets tr:nth-child(even){background-color: #d2d2d2;}
 #markets tr:nth-child(odd){background-color: #f2f2f2;}
 
 #markets tr:hover {background-color: #ddd;}
 
+/* Table header formating */
 #markets th {
   padding: 8px;
   padding-top: 12px;

@@ -1,3 +1,5 @@
+// This is the top nav bar that goes on both pages
+
 import Link from 'next/link'
 import css from "../style.css"
 

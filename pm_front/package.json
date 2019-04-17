@@ -1,14 +1,14 @@
 {
-  "name": "next-app",
+  "name": "pm_front",
   "version": "1.0.0",
-  "description": "",
+  "description": "React frontend for a hyperledger prediction market",
   "main": "index.js",
   "scripts": {
     "dev": "next -p 4000",
     "build": "next build",
     "start": "next start -p 4000"
   },
-  "author": "",
+  "author": "Christopher Siewert",
   "license": "ISC",
   "dependencies": {
     "@zeit/next-css": "^1.0.1",

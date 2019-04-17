@@ -5,11 +5,14 @@ import fetch from 'isomorphic-unfetch'
 import css from "../style.css"
 const address = require("../ip-config").address
 
+// Calculate cost according to LMSR
 function costCalc(q1, q2) {
   const b = 100
   return b * Math.log(Math.exp(q1/b) + Math.exp(q2/b))
 }
 
+// React component for taking different trader IDs
+// Currently unused
 class UserInput extends Component {
   render() {
     return (
@@ -24,12 +27,17 @@ class UserInput extends Component {
     )
   }
 }
+
+// React buy form
+// Controlled component, to auto update current price
+// depending on entered amount of tokens
 class BuyForm extends Component {
   constructor(props) {
     super(props);
     this.state = {amount: 1, option: "YES"};
   }
 
+  // Handlers for controlled component
   handleChange = (e) => {
     this.setState({amount: e.target.value});
   }
@@ -40,7 +48,10 @@ class BuyForm extends Component {
     })
   }
 
+  // Submit buy order
   handleSubmit = async (e) => {
+
+    // parameters for api call
     let bodyParams = {
       $class: "org.example.basic.BuyShares",
       trader: "resource:org.example.basic.Trader#1",
@@ -57,10 +68,12 @@ class BuyForm extends Component {
             .then((data) =>  console.log(data))
             .catch((err)=>console.log(err))
   }
-  render() {
-    let price
 
+  render() {
+    // price depends on current option and number of shares
+    let price
     if (this.state.option == "YES") {
+      // price is according to LMSR
       price = costCalc(this.props.yesShares + Number(this.state.amount),
                   this.props.noShares) -
                   costCalc(this.props.yesShares, this.props.noShares)
@@ -95,6 +108,9 @@ class BuyForm extends Component {
   }
 }
 
+// React buy form
+// Controlled component, to auto update current price
+// depending on entered amount of tokens
 class SellForm extends Component {
   constructor(props) {
     super(props);
@@ -129,8 +145,8 @@ class SellForm extends Component {
             .catch((err)=>console.log(err))
   }
   render() {
+    // price depends on current option and number of shares
     let price
-
     if (this.state.option == "YES") {
       price = costCalc(this.props.yesShares - Number(this.state.amount),
                   this.props.noShares) -
@@ -167,10 +183,13 @@ class SellForm extends Component {
   }
 }
 
+// React component to display each market
 class Market extends Component {
   render() {
     let yes = 0;
     let no = 0;
+    // Loops through the trader shares array to see if
+    // the trader has any shares in the current market
     if (this.props.trader.shares) {
       for (let i = 0; i < this.props.trader.shares.length; i++) {
         if (this.props.trader.shares[i].market
@@ -205,6 +224,7 @@ class Market extends Component {
   }
 }
 
+// Main react component
 class App extends Component {
   constructor(props) {
       super(props);
@@ -213,8 +233,10 @@ class App extends Component {
         isLoaded: false,
         markets: {},
         trader: {}
-      };
-    }
+      }
+  }
+  // Does initial api calls of market and trader data
+  // sets isLoaded to true if it loads, otherwise error
   componentDidMount() {
     fetch(address + ":3000/api/Market")
       .then(res => res.json())
@@ -245,6 +267,7 @@ class App extends Component {
           })
         }
       )
+    // Sets timer to fetch updated market and trader info every second
     this.marketTimer = setInterval(
       () => this.changeMarkets(),
       1000
@@ -255,6 +278,7 @@ class App extends Component {
     );
   }
 
+  // function that fetches new market info and saves to state
   changeMarkets = () => {
     fetch(address + "/api/Market")
       .then(res => res.json())
@@ -271,7 +295,7 @@ class App extends Component {
         }
       )
   }
-
+  // function that fetches new trader info and saves to state
   changeTrader = () => {
     fetch(address + "/api/Trader/1")
       .then(res => res.json())
@@ -296,6 +320,8 @@ class App extends Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
+      // Loop through the markets array and for each one,
+      // make a market object
       let list = markets.map(entry => {
         if (entry.isResolved == false) {
           return (
