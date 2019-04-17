@@ -8,7 +8,7 @@ The idea is that a business can set up an internal prediction market, for the em
 
 ##### Prediction Market Background Info
 
- - [What's a prediction market](#what's-a-prediction-market)
+ - [What's a prediction market](#whats-a-prediction-market)
  - [Why does the market price tell you the probability](#why-does-the-market-price-tell-you-the-probability)
  - [Why is this useful for business](#why-is-this-useful-for-business)
 
@@ -19,7 +19,7 @@ The idea is that a business can set up an internal prediction market, for the em
 
 ## Prediction Market Background Info
 
-### What's a prediction market
+### What's a prediction market?
 
 A prediction market is a financial market (like a stock exchange) that allows people to trade tokens with values that depend on the outcome of some future event.
 
