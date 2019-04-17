@@ -10,6 +10,10 @@ const delay = ms => new Promise(res => setTimeout(res, ms))
 
 // Calculates price according to LMSR
 function calcPrice (q1, q2) {
+  // b is a constant that can be adjusted with depending on how quickly you want
+  // the price to change. A higher b = much slower price change, more "depth",
+  // more liquidity, but also more potential losses for the market maker.
+  // It should be the same in both files for consistency
   const b = 100
   return Math.exp(q1/b) / (Math.exp(q1/b) + Math.exp(q2/b))
 }
